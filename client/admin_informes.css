@@ -1,0 +1,264 @@
+/* === VARIABLES === */
+:root {
+    --color-dark: #1a1a1a;
+    --color-gold: #d6ba5f;
+    --color-brown: #450402;
+    --color-light: #f7f3e8;
+    --color-mid: #a38e48;
+    --color-accent: #e9a46c;
+    --color-border: #b2b8d8;
+    --color-text: #000;
+    --color-text-light: #fff;
+    --color-text-dark: #181c2f;
+    --gradient-main: linear-gradient(135deg, var(--color-dark) 0%, var(--color-gold) 100%);
+    --gradient-btn: linear-gradient(90deg, var(--color-dark) 0%, var(--color-light) 100%);
+    --gradient-btn-hover: linear-gradient(90deg, var(--color-light) 0%, var(--color-dark) 100%);
+    --shadow: 0 4px 16px rgba(0,0,0,0.15);
+    --transition-main: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* === FONDO Y TEXTO BASE === */
+html, body {
+    min-height: 100vh;
+    background: var(--gradient-main);
+    font-family: 'San Francisco', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
+
+/* === TITULO === */
+h1 {
+    font-weight: 900;
+    color: var(--color-light);
+    letter-spacing: 0.03em;
+    text-shadow: 0 2px 16px #a38e4833, 0 1px 4px #fff8;
+    font-size: 2.2em;
+    text-align: center;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+/* === FORMULARIO === */
+form {
+    max-width: 480px;
+    margin: 2em auto;
+    background: rgba(255,255,255,0.13);
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow);
+    padding: 2em 2em 1.5em 2em;
+    border: 2.5px solid var(--color-border);
+    backdrop-filter: blur(12px) saturate(120%);
+}
+
+label {
+    display: block;
+    color: var(--color-mid);
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    margin-top: 1.2em;
+    letter-spacing: 0.01em;
+}
+
+input, select, textarea {
+    width: 100%;
+    border-radius: 1.1rem;
+    border: 2.5px solid var(--color-mid);
+    background: var(--color-dark);
+    color: var(--color-text-light);
+    font-size: 1.08em;
+    padding: 0.7em 1em;
+    margin-bottom: 0.7em;
+    box-shadow: 0 2px 12px #a38e4833;
+    transition: border 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+    outline: none;
+    resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+    border: 2.5px solid var(--color-light);
+    background: var(--color-brown);
+    color: var(--color-text-light);
+    box-shadow: 0 8px 24px rgba(214,186,95,0.15);
+}
+
+input[type="file"] {
+    background: none;
+    color: var(--color-mid);
+    border: none;
+    box-shadow: none;
+    padding-left: 0;
+}
+
+input[type="date"] {
+    color-scheme: dark;
+}
+
+textarea {
+    min-height: 80px;
+    max-height: 220px;
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--color-light);
+    opacity: 1;
+}
+
+/* === BOTÓN === */
+button[type="submit"] {
+    border-radius: 1.25rem;
+    padding: 0.8em 2em;
+    font-weight: 600;
+    background: var(--gradient-btn);
+    color: var(--color-text-light);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    font-size: 1.13em;
+    letter-spacing: 0.01em;
+    border: none;
+    margin-top: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, color 0.2s;
+}
+
+button[type="submit"]:hover, button[type="submit"]:focus {
+    background: var(--gradient-btn-hover);
+    color: #181c2f;
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 4px 24px #a38e4855, 0 2px 16px #18100033;
+}
+
+/* === PREVIEW DE IMAGEN === */
+.preview {
+    margin: 0.5em 0 1em 0;
+    text-align: center;
+}
+.preview img {
+    max-width: 220px;
+    max-height: 160px;
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px #a38e4833;
+    margin-top: 0.5em;
+}
+
+/* === MENSAJE === */
+#msg {
+    text-align: center;
+    margin-bottom: 1em;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+/* === INFO PACIENTE === */
+#paciente-info {
+    margin: 0.5em 0 1em 0;
+    color: var(--color-accent);
+    font-weight: 500;
+    font-size: 1.13em;
+    background: rgba(255,255,255,0.10);
+    border-radius: 0.8em;
+    padding: 0.6em 1em;
+    box-shadow: 0 2px 8px #a38e4833;
+}
+
+/* === TABLA INFORMES === */
+#informes-lista {
+    max-width: 1100px;
+    margin: 2em auto 2em auto;
+    background: rgba(255,255,255,0.13);
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow);
+    padding: 1.5em 1em 1em 1em;
+    border: 2.5px solid var(--color-border);
+    overflow-x: auto;
+}
+
+#tabla-informes {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1em;
+    background: none;
+}
+
+#tabla-informes th, #tabla-informes td {
+    border: 1.5px solid var(--color-border);
+    padding: 0.5em 0.7em;
+    text-align: left;
+    background: rgba(255,255,255,0.08);
+}
+
+#tabla-informes th {
+    background: var(--color-gold);
+    color: var(--color-dark);
+    font-weight: 700;
+}
+
+#tabla-informes tr:nth-child(even) td {
+    background: rgba(214,186,95,0.07);
+}
+
+#tabla-informes a {
+    color: var(--color-brown);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+    form {
+        padding: 1em 0.5em;
+    }
+    h1 {
+        font-size: 1.3em;
+        margin-top: 1em;
+    }
+    button[type="submit"] {
+        font-size: 1em;
+        padding: 0.7em 1em;
+    }
+}
+
+/* === MODO OSCURO === */
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background: linear-gradient(135deg, #181818 0%, #a38e48 100%);
+        color: #f7f3e8;
+    }
+    form {
+        background: rgba(35,35,35,0.85);
+        border: 2.5px solid #d6ba5f;
+        color: #f7f3e8;
+    }
+    label {
+        color: #d6ba5f;
+    }
+    input, select, textarea {
+        background: #232323;
+        color: #fffbe6;
+        border: 2.5px solid #d6ba5f;
+    }
+    input:focus, select:focus, textarea:focus {
+        background: #181818;
+        color: #fffbe6;
+        border: 2.5px solid #fffbe6;
+    }
+    input::placeholder, textarea::placeholder {
+        color: #d6ba5f;
+    }
+    button[type="submit"] {
+        background: linear-gradient(90deg, #a38e48 0%, #232323 100%);
+        color: #fffbe6;
+        border: 2px solid #d6ba5f;
+    }
+    button[type="submit"]:hover, button[type="submit"]:focus {
+        background: linear-gradient(90deg, #232323 0%, #a38e48 100%);
+        color: #fffbe6;
+        border: 2px solid #fffbe6;
+    }
+    h1 {
+        color: #fffbe6;
+        text-shadow: 0 2px 16px #a38e4888, 0 1px 4px #fff8;
+    }
+    #paciente-info {
+        color: #e9a46c;
+    }
+}
