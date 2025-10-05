@@ -1,70 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Informes y Radiografías</title>
-    <link rel="stylesheet" href="admin_informes.css">
+        <meta charset="UTF-8">
+        <title>XPectra - Gestión de Informes y Radiografías</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="icon" type="image/png" href="/img/XPectra.png">
+    <link href="/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/style.css">
+        <link rel="stylesheet" href="admin_informes.css">
+    <link rel="stylesheet" href="/vendor/bootstrap-icons/bootstrap-icons.css">
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>
+        <script src="/scripts/notifications.js" defer></script>
+        <script src="/theme-toggle.js" defer></script>
 </head>
 <body>
-    <h1>Gestión de Informes y Radiografías</h1>
-    <div id="msg"></div>
-    <form id="form-informe" enctype="multipart/form-data">
-        <label>
-            Selecciona una cita pendiente:
-            <select id="cita" name="cita" required></select>
-        </label>
-        <div id="paciente-info"></div>
-        <label>
-            Imagen de radiografía:
-            <input type="file" id="imagen" name="imagen" accept="image/*" required>
-        </label>
-        <button type="button" id="analizar-ia" style="margin-bottom:10px;">Analizar con IA</button>
-        <div class="preview" id="preview"></div>
-        <div id="ia-label-container" class="ia-result-card">
-            <!-- Aquí se mostrarán los resultados de la IA -->
+        <!-- Header unificado -->
+        <div id="appHeader" class="app-header">
+            <div class="header-inner">
+                <div class="left-bar-btns d-flex flex-row gap-2" id="leftBarBtns">
+                    <a href="/landing.html" class="btn btn-outline-secondary" aria-label="Volver a inicio" title="Volver a la página principal">
+                        <i class="bi bi-arrow-left"></i> <span class="btn-text d-none d-md-inline">Inicio</span>
+                    </a>
+                    <a href="/index.html" class="btn btn-outline-primary" aria-label="Ir a Panel Citas" title="Ir a Panel Citas">
+                        <i class="bi bi-calendar2-week"></i> <span class="btn-text d-none d-md-inline">Citas</span>
+                    </a>
+                </div>
+                <div id="topBarBtns" class="d-flex flex-row gap-2">
+                    <button class="btn btn-outline-secondary" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" id="logoutBtn" aria-label="Cerrar sesión" title="Cerrar sesión">
+                        <i class="bi bi-box-arrow-right"></i> <span class="btn-text d-none d-md-inline">Salir</span>
+                    </button>
+                </div>
+            </div>
         </div>
-        <label>
-            Diagnóstico:
-            <textarea name="Diagnostico" id="Diagnostico" required></textarea>
-        </label>
-        <label>
-            Recomendaciones:
-            <textarea name="Recomendaciones" id="Recomendaciones"></textarea>
-        </label>
-        <label>
-            Predicción IA (opcional):
-            <input type="text" name="IA_Prediccion" id="IA_Prediccion">
-        </label>
-        <label>
-            Fecha del informe:
-            <input type="date" name="Fecha_Informe" id="Fecha_Informe" required>
-        </label>
-        <button type="submit">Guardar Informe</button>
-    </form>
-    <h2>Informes existentes</h2>
-    <div id="informes-lista">
-        <table id="tabla-informes">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Paciente</th>
-                    <th>Fecha cita</th>
-                    <th>Hora</th>
-                    <th>Categoría</th>
-                    <th>Diagnóstico</th>
-                    <th>Fecha informe</th>
-                    <th>Imagen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Se llenará por JS -->
-            </tbody>
-        </table>
-    </div>
+
+        <div class="container mt-5">
+            <h1 class="neo-title mb-4">Gestión de Informes y Radiografías</h1>
+            <div id="msg" role="status" aria-live="polite" class="mb-3"></div>
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <h5 class="neo-section-title mb-3"><i class="bi bi-file-earmark-plus"></i> Nuevo / Editar Informe</h5>
+                    <form id="form-informe" enctype="multipart/form-data" autocomplete="off" aria-label="Formulario de informe" class="modal-responsive">
+            <label>
+                Selecciona una cita pendiente:
+                <select id="cita" name="cita" required aria-required="true"></select>
+            </label>
+            <div id="paciente-info" aria-live="polite"></div>
+            <div id="categoria-info" style="margin-bottom:8px;color:#b28dff;font-weight:bold;"></div>
+            <label>
+                Imagen de radiografía:
+                <input type="file" id="imagen" name="imagen" accept="image/*" required aria-required="true">
+                                        <button type="button" id="abrir-camara" class="btn btn-outline-secondary btn-sm mt-2">Usar cámara</button>
+            </label>
+            <div id="camara-container" style="display:none; text-align:center;">
+                <video id="video-camara" width="220" height="160" autoplay playsinline style="border-radius:1rem; box-shadow:0 2px 12px #a38e4833;"></video>
+                <br>
+                                        <button type="button" id="capturar-foto" class="btn btn-outline-primary btn-sm my-2">Capturar foto</button>
+                                        <button type="button" id="cerrar-camara" class="btn btn-outline-danger btn-sm my-2">Cerrar cámara</button>
+            </div>
+            <div id="modelo-ia-info" style="margin-bottom:8px;color:#198754;font-weight:bold;"></div>
+                                <button type="button" id="analizar-ia" class="btn btn-outline-primary mb-3">Analizar con IA</button>
+            <div class="preview" id="preview"></div>
+            <div id="ia-label-container" class="ia-result-card" aria-live="polite">
+                <!-- Aquí se mostrarán los resultados de la IA -->
+            </div>
+            <label>
+                Diagnóstico:
+                <textarea name="Diagnostico" id="Diagnostico" required aria-required="true" placeholder="Describe el diagnóstico..."></textarea>
+            </label>
+            <label>
+                Recomendaciones:
+                <textarea name="Recomendaciones" id="Recomendaciones" placeholder="Opcional: recomendaciones para el paciente"></textarea>
+            </label>
+            <label>
+                Predicción IA (opcional):
+                <input type="text" name="IA_Prediccion" id="IA_Prediccion" placeholder="Resultado IA (si aplica)">
+            </label>
+            <label>
+                Fecha del informe:
+                <input type="date" name="Fecha_Informe" id="Fecha_Informe" required aria-required="true">
+            </label>
+                                <button type="submit" class="btn btn-success mt-2">Guardar Informe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="card shadow mb-5">
+                <div class="card-body">
+                    <h5 class="neo-section-title mb-3"><i class="bi bi-collection"></i> Informes existentes</h5>
+                            <div class="row g-2 mb-3" id="informes-filtros">
+                                <div class="col-12 col-md-6">
+                                    <input type="text" id="filtroInformes" class="form-control" placeholder="Filtrar por paciente, diagnóstico, categoría..." aria-label="Filtrar informes" />
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <input type="date" id="filtroFechaDesde" class="form-control" aria-label="Filtrar desde fecha" />
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <input type="date" id="filtroFechaHasta" class="form-control" aria-label="Filtrar hasta fecha" />
+                                </div>
+                            </div>
+                    <div id="informes-lista" class="modal-responsive p-0" style="background:transparent;border:none;box-shadow:none;margin:0;">
+                        <table id="tabla-informes" aria-describedby="tabla-informes-desc" class="table table-striped align-middle">
+                            <caption id="tabla-informes-desc" class="visually-hidden">Tabla de informes registrados</caption>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Paciente</th>
+                                    <th>Fecha cita</th>
+                                    <th>Hora</th>
+                                    <th>Categoría</th>
+                                    <th>Diagnóstico</th>
+                                    <th>Fecha informe</th>
+                                    <th>Imagen</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <!-- Modal Visor de Imagen -->
+                <div class="modal fade" id="visorImagenModal" tabindex="-1" aria-labelledby="visorImagenModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content ios-glass">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="visorImagenModalLabel"><i class="bi bi-eye"></i> Radiografía</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body text-center" id="visorImagenBody"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Perfil (admin) -->
+                <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content ios-glass perfil-modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="perfilModalLabel"><i class="bi bi-person-circle"></i> Mi Perfil</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <form id="perfilForm" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <div class="d-flex flex-column align-items-center mb-4">
+                                        <img id="perfilFotoPreview" src="/img/XPectra.png" alt="Foto de perfil" class="perfil-foto-preview mb-2">
+                                        <label for="perfilFoto" class="btn btn-link p-0">Cambiar foto</label>
+                                        <input type="file" id="perfilFoto" accept="image/*" class="d-none">
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Nombre de usuario</label>
+                                            <input type="text" class="form-control" id="perfilNombreUsuario" required>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Correo</label>
+                                            <input type="email" class="form-control" id="perfilCorreo" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-danger" id="borrarPerfilBtn"><i class="bi bi-trash"></i> Borrar</button>
+                                    <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón Perfil en header -->
+                <script src="/scripts/add-profile-button.js" defer></script>
+        <div id="themeLive" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     <!-- Scripts de TensorFlow y Teachable Machine -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="/vendor/tfjs/tf.min.js"></script>
+    <script src="/vendor/teachablemachine/teachablemachine-image.min.js"></script>
+    <!-- jsPDF + autotable para exportar a PDF -->
+    <script src="/vendor/jspdf/jspdf.umd.min.js"></script>
+    <script src="/vendor/jspdf/jspdf.plugin.autotable.min.js"></script>
     <script src="admin_informes.js"></script>
-    <!-- El script de configuración IA se movió a admin_informes.js -->
 </body>
 </html>

@@ -2,85 +2,99 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinica Radiografías</title>
-    <meta name="description" content="Gestión de citas, radiografías e informes médicos en Clínica Radiografías. Seguro, moderno y fácil de usar.">
-    <meta name="keywords" content="clínica, radiografías, citas, informes, salud, médico">
-    <meta name="author" content="Clínica Radiografías">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XPectra-Gestion de Citas</title>
+    <meta name="description" content="Panel de gestión de citas y radiografías para usuarios registrados de XPectra. Accede a tus informes y administra tu información médica.">
+    <meta name="keywords" content="panel, gestión, citas, radiografías, informes médicos, usuario, XPectra">
+    <meta name="author" content="XPectra">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Clínica Radiografías">
-    <meta property="og:description" content="Gestión moderna y segura de tus citas, radiografías e informes médicos.">
+    <meta property="og:title" content="XPectra">
+    <meta property="og:description" content="Gestion de citas.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="/img/p1.jpg">
     <meta property="og:url" content="http://localhost:3000/">
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/vendor/bootstrap-icons/bootstrap-icons.css">
+    <link rel="icon" type="image/png" href="\img\XPectra.png">
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>
+  <script src="/scripts/notifications.js" defer></script>
     <script src="/app.js" defer></script>
+    <script src="/theme-toggle.js" defer></script>
 </head>
 <body>
-    <!-- Botón para volver a la landing (esquina inferior izquierda) -->
-    <div class="left-bar-btns">
-        <a href="/landing.html" class="neo-btn secondary left-bar-btn" aria-label="Volver a inicio" data-bs-toggle="tooltip" data-bs-placement="right" title="Volver a la página principal">
-            <i class="bi bi-arrow-left"></i> Volver a inicio
-        </a>
+    <!-- Header unificado con blur -->
+    <div id="appHeader" class="app-header">
+      <div class="header-inner">
+        <!-- Grupo izquierdo: navegación/contexto -->
+        <div class="left-bar-btns d-flex flex-row gap-2" id="leftBarBtns">
+          <a href="/landing.html" class="btn btn-outline-secondary" aria-label="Volver a inicio" title="Volver a la página principal">
+            <i class="bi bi-arrow-left"></i> <span class="btn-text">Volver a inicio</span>
+          </a>
+          <!-- El botón de Informes/Citas/Usuarios se agregará dinámicamente por JS aquí si corresponde -->
+        </div>
+        <!-- Grupo derecho: acciones de sesión -->
+        <div id="topBarBtns" class="d-flex flex-row gap-2">
+          <button class="btn btn-outline-secondary" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+            <i class="bi bi-moon"></i>
+          </button>
+          <button class="btn btn-outline-primary" id="misInformesBtn" style="display:none;" aria-label="Mis Informes" title="Ver mis informes">
+            <i class="bi bi-file-earmark-medical"></i> <span class="btn-text">Mis Informes</span>
+          </button>
+          <button class="btn btn-outline-secondary" id="perfilBtn" aria-label="Mi Perfil" title="Ver o editar tu perfil">
+            <i class="bi bi-person-circle"></i> <span class="btn-text">Mi Perfil</span>
+          </button>
+          <button class="btn btn-outline-danger" id="logoutBtn" aria-label="Cerrar sesión" title="Cerrar sesión">
+            <i class="bi bi-box-arrow-right"></i> <span class="btn-text">Cerrar sesión</span>
+          </button>
+        </div>
+      </div>
     </div>
-    <!-- Barra superior con botones de perfil y logout, FIJA en la esquina superior derecha -->
-    <div id="topBarBtns" class="d-flex" style="display:none;">
-        <!-- Botón solo para admins, oculto por defecto -->
-        <a href="admin_informes.html" id="adminInformesBtn" class="neo-btn secondary me-2 d-none" style="background:linear-gradient(90deg,#ffb347 0%,#ffcc80 100%);color:#512da8;" target="_blank">
-            <i class="bi bi-file-earmark-medical"></i> Informes
-        </a>
-        <button class="neo-btn perfil-btn" id="perfilBtn" aria-label="Mi Perfil" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ver o editar tu perfil"><i class="bi bi-person-circle"></i> Mi Perfil</button>
-        <button class="neo-btn secondary logout-btn" id="logoutBtn" aria-label="Cerrar sesión" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cerrar sesión"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
-    </div>
+
     <div class="container mt-5">
-        <h1 class="neo-title animate__animated animate__fadeInDown animate-fadeInUp">Gestión de Citas</h1>
+        <h1 class="neo-title">Gestion de Citas</h1>
         <!-- Login -->
-        <div class="neo-card shadow mb-4 animate__animated animate__fadeIn animate-fadeInUp shine-effect" id="loginCard">
+        <div class="card shadow mb-4" id="loginCard">
             <div class="card-body">
                 <h5 class="neo-section-title">Iniciar Sesión</h5>
                 <form id="loginForm" autocomplete="on" novalidate>
                     <div class="mb-3">
-                        <input type="email" class="form-control ios-input" placeholder="Correo" id="loginCorreo" required autocomplete="username">
+                        <input type="email" class="form-control" placeholder="Correo" id="loginCorreo" required autocomplete="username">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control ios-input" placeholder="Contraseña" id="loginContrasena" required autocomplete="current-password">
+                        <input type="password" class="form-control" placeholder="Contraseña" id="loginContrasena" required autocomplete="current-password">
+            <div id="loginHint" class="form-text small text-secondary mt-1"></div>
                     </div>
-                    <button type="submit" class="neo-btn w-100">Entrar</button>
+                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
                 </form>
                 <div class="mt-2 text-center">
-                    <span class="ios-link" id="showRegisterBtn">¿No tienes cuenta? Regístrate</span>
+                    <span class="text-primary" id="showRegisterBtn" style="cursor:pointer;">¿No tienes cuenta? Regístrate</span>
                 </div>
             </div>
         </div>
         <!-- Registro -->
-        <div class="neo-card shadow mb-4 animate__animated animate__fadeIn animate-fadeInUp shine-effect" id="registerCard" style="display:none;">
+        <div class="card shadow mb-4" id="registerCard" style="display:none;">
             <div class="card-body">
                 <h5 class="neo-section-title">Registro de Usuario</h5>
                 <form id="registerForm" autocomplete="on" novalidate>
                     <div class="mb-3">
-                        <input type="text" class="form-control ios-input" placeholder="Nombre de usuario" id="registerNombre" required autocomplete="username">
+                        <input type="text" class="form-control" placeholder="Nombre de usuario" id="registerNombre" required autocomplete="username">
                     </div>
                     <div class="mb-3">
-                        <input type="email" class="form-control ios-input" placeholder="Correo" id="registerCorreo" required autocomplete="email">
+                        <input type="email" class="form-control" placeholder="Correo" id="registerCorreo" required autocomplete="email">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control ios-input" placeholder="Contraseña" id="registerContrasena" required autocomplete="new-password">
+                        <input type="password" class="form-control" placeholder="Contraseña" id="registerContrasena" required autocomplete="new-password">
                     </div>
-                    <button type="submit" class="neo-btn w-100 secondary">Registrarse</button>
+                    <button type="submit" class="btn btn-success w-100">Registrarse</button>
                 </form>
                 <div class="mt-2 text-center">
-                    <span class="ios-link" id="showLoginBtn">¿Ya tienes cuenta? Inicia sesión</span>
+                    <span class="text-primary" id="showLoginBtn" style="cursor:pointer;">¿Ya tienes cuenta? Inicia sesión</span>
                 </div>
             </div>
         </div>
         <!-- Formulario Nueva Cita -->
-        <div class="neo-card shadow mb-4 animate__animated animate__fadeIn animate-fadeInUp shine-effect" id="citaCard" style="display:none;">
+        <div class="card shadow mb-4" id="citaCard" style="display:none;">
             <div class="card-body">
                 <h5 class="neo-section-title mb-3"><i class="bi bi-calendar-plus cita-icon"></i> Nueva Cita</h5>
                 <form id="citaForm" autocomplete="on" novalidate>
@@ -153,7 +167,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                     <hr class="my-4">
                     <div class="mb-3">
@@ -184,22 +198,29 @@
                         <!-- Campos de pago y tipo de pago se agregan por JS -->
                     </div>
                     <div class="row g-3 mt-2" id="extraPagoCampos"></div>
-                    <button type="submit" class="neo-btn w-100 mt-3">Agendar Cita</button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Agendar Cita</button>
                 </form>
             </div>
         </div>
 
-        <!-- NUEVO: Sección de informes del usuario -->
-        <div class="neo-card shadow mb-4 animate__animated animate__fadeIn animate-fadeInUp shine-effect" id="misInformesCard" style="display:">
-            <div class="card-body">
-                <h5 class="neo-section-title mb-3"><i class="bi bi-file-earmark-medical"></i> Mis Informes</h5>
+        <!-- NUEVO: Modal Mis Informes -->
+        <div class="modal fade" id="misInformesModal" tabindex="-1" aria-labelledby="misInformesModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-xl modal-dialog-centered modal-responsive">
+            <div class="modal-content ios-glass">
+              <div class="modal-header">
+                <h5 class="modal-title" id="misInformesModalLabel"><i class="bi bi-file-earmark-medical"></i> Mis Informes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body">
                 <div id="misInformesCont"></div>
+              </div>
             </div>
+          </div>
         </div>
 
         <!-- Modal Perfil Usuario/Admin -->
         <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog modal-dialog-centered modal-responsive">
             <div class="modal-content ios-glass perfil-modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="perfilModalLabel"><i class="bi bi-person-circle"></i> Mi Perfil</h5>
@@ -208,49 +229,24 @@
               <form id="perfilForm" enctype="multipart/form-data">
                 <div class="modal-body">
                   <div class="d-flex flex-column align-items-center mb-4">
-                    <img id="perfilFotoPreview" src="https://ui-avatars.com/api/?name=Usuario&background=d6ba5f&color=b28dff&size=96" alt="Foto de perfil" class="perfil-foto-preview">
-                    <label for="perfilFoto" class="ios-link mt-2 cursor-pointer">Cambiar foto</label>
+                    <img id="perfilFotoPreview" src="/img/XPectra.png" alt="Foto de perfil" class="perfil-foto-preview mb-2">
+                    <label for="perfilFoto" class="btn btn-link p-0">Cambiar foto</label>
                     <input type="file" id="perfilFoto" accept="image/*" class="d-none">
                   </div>
                   <div class="row g-3">
                     <div class="col-12 col-md-6">
                       <label class="form-label">Nombre de usuario</label>
-                      <input type="text" class="form-control ios-input" id="perfilNombreUsuario" required>
+                      <input type="text" class="form-control" id="perfilNombreUsuario" required>
                     </div>
                     <div class="col-12 col-md-6">
                       <label class="form-label">Correo</label>
-                      <input type="email" class="form-control ios-input" id="perfilCorreo" disabled>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label">Nombre completo</label>
-                      <input type="text" class="form-control ios-input" id="perfilNombreCompleto">
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label">Teléfono</label>
-                      <input type="tel" class="form-control ios-input" id="perfilTelefono">
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label">Fecha de nacimiento</label>
-                      <input type="date" class="form-control ios-input" id="perfilFechaNacimiento">
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <label class="form-label">Sexo</label>
-                      <select class="form-select ios-input" id="perfilSexo">
-                          <option value="">Selecciona</option>
-                          <option value="Masculino">Masculino</option>
-                          <option value="Femenino">Femenino</option>
-                          <option value="Otro">Otro</option>
-                      </select>
-                    </div>
-                    <div class="col-12">
-                      <label class="form-label">Dirección</label>
-                      <input type="text" class="form-control ios-input" id="perfilDireccion">
+                      <input type="email" class="form-control" id="perfilCorreo" disabled>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
-                  <button type="button" class="btn btn-danger" id="borrarPerfilBtn"><i class="bi bi-trash"></i> Borrar</button>
-                  <button type="submit" class="neo-btn"><i class="bi bi-save"></i> Guardar</button>
+                  <button type="button" class="btn btn-outline-danger" id="borrarPerfilBtn"><i class="bi bi-trash"></i> Borrar</button>
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-save"></i> Guardar</button>
                 </div>
               </form>
             </div>
@@ -259,7 +255,7 @@
 
         <!-- Modal Galería de Radiografías -->
         <div class="modal fade" id="galeriaModal" tabindex="-1" aria-labelledby="galeriaModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-dialog modal-xl modal-dialog-centered modal-responsive">
             <div class="modal-content ios-glass galeria-modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="galeriaModalLabel"><i class="bi bi-images"></i> Galería de Radiografías</h5>
@@ -274,7 +270,7 @@
 
         <!-- Modal Edición de Cita -->
         <div class="modal fade" id="editCitaModal" tabindex="-1" aria-labelledby="editCitaModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog modal-dialog-centered modal-responsive">
             <div class="modal-content ios-glass">
               <div class="modal-header">
                 <h5 class="modal-title" id="editCitaModalLabel">Editar Cita</h5>
@@ -284,20 +280,20 @@
                 <div class="modal-body">
                   <div class="mb-3">
                     <label for="editFecha_Cita" class="form-label">Fecha de la cita</label>
-                    <input type="date" class="form-control ios-input" id="editFecha_Cita" required>
+                    <input type="date" class="form-control" id="editFecha_Cita" required>
                   </div>
                   <div class="mb-3">
                     <label for="editHora_Cita" class="form-label">Hora de la cita</label>
-                    <input type="time" class="form-control ios-input" id="editHora_Cita" required>
+                    <input type="time" class="form-control" id="editHora_Cita" required>
                   </div>
                   <div class="mb-3">
                     <label for="editMotivo" class="form-label">Motivo</label>
-                    <input type="text" class="form-control ios-input" id="editMotivo" maxlength="100">
+                    <input type="text" class="form-control" id="editMotivo" maxlength="100">
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="neo-btn">Guardar Cambios</button>
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>
               </form>
             </div>
@@ -306,7 +302,7 @@
 
         <!-- Modal Citas Programadas -->
         <div class="modal fade" id="citasTabModal" tabindex="-1" aria-labelledby="citasTabModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-dialog modal-xl modal-dialog-centered modal-responsive">
             <div class="modal-content ios-glass">
               <div class="modal-header">
                 <h5 class="modal-title" id="citasTabModalLabel"><i class="bi bi-list-ul"></i> Citas Programadas</h5>
@@ -321,7 +317,7 @@
 
         <!-- Modal Usuarios Registrados (solo admin) -->
         <div class="modal fade" id="usuariosTabModal" tabindex="-1" aria-labelledby="usuariosTabModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-dialog modal-xl modal-dialog-centered modal-responsive">
             <div class="modal-content ios-glass">
               <div class="modal-header">
                 <h5 class="modal-title" id="usuariosTabModalLabel"><i class="bi bi-people"></i> Usuarios Registrados</h5>
@@ -338,5 +334,7 @@
         <!-- Agregar mensaje de error -->
         <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
     </div>
+    </div>
+  <div id="themeLive" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

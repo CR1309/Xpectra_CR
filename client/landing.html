@@ -2,185 +2,280 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Radiografías</title>
-    <meta name="description" content="Gestión de citas, radiografías e informes médicos en Clínica Radiografías. Seguro, moderno y fácil de usar.">
-    <meta name="keywords" content="clínica, radiografías, citas, informes, salud, médico">
-    <meta name="author" content="Clínica Radiografías">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XPectra</title>
+    <meta name="description" content="Bienvenido a la landing de XPectra. Descubre cómo gestionar tus citas y acceder a tus radiografías de forma segura y sencilla.">
+    <meta name="keywords" content="landing, XPectra, radiografías, salud, citas médicas, gestión, digital">
+    <meta name="author" content="XPectra">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Clínica Radiografías">
-    <meta property="og:description" content="Gestión moderna y segura de tus citas, radiografías e informes médicos.">
+    <meta property="og:title" content="XPectra">
+    <meta property="og:description" content="Tecnología y precisión en radiografías digitales.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="/img/p1.jpg">
     <meta property="og:url" content="http://localhost:3000/">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" as="image" href="/img/p1.jpg" imagesrcset="/img/p1.jpg 1x" imagesizes="(min-width: 1700px) 520px, (min-width: 1400px) 480px, 420px">
     <link rel="stylesheet" href="landing.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="landing.js"></script>
+    <link rel="stylesheet" href="/vendor/bootstrap-icons/bootstrap-icons.css">
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js" defer></script>
+    <script src="landing.js" defer></script>
 </head>
-<body>
-    <canvas id="bgParticles"></canvas>
-    <div class="container">
-        <section class="neo-hero">
-            <div id="landingCarousel" class="carousel slide neo-carousel animate__animated animate__fadeIn" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="/img/p1.jpg" class="d-block w-100" alt="Radiografía 1, ejemplo de imagen clínica">
-                        <div class="carousel-caption d-none d-md-block carousel-caption-bienvenido">
-                            <h5 class="carousel-title-bienvenido">Bienvenido</h5>
-                            <p class="carousel-desc">Gestión moderna y segura de tus citas.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="/img/p2.jpg" class="d-block w-100" alt="Radiografía 2">
-                        <div class="carousel-caption d-none d-md-block carousel-caption-digitales">
-                            <h5 class="carousel-title-digitales">Radiografías Digitales</h5>
-                            <p class="carousel-desc">Accede a tus imágenes desde cualquier lugar.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://cdn.pixabay.com/photo/2017/01/31/13/13/medical-2027768_1280.png" class="d-block w-100" alt="Radiografía 3">
-                        <div class="carousel-caption d-none d-md-block carousel-caption-privacidad">
-                            <h5 class="carousel-title-privacidad">Privacidad y Seguridad</h5>
-                            <p class="carousel-desc">Tus datos siempre protegidos.</p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#landingCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter:invert(1);"></span>
-                    <span class="visually-hidden">Anterior</span>
+<body class="landing-page">
+    <a href="#hero-title" class="skip-link">Saltar al contenido</a>
+    <header class="site-header" role="banner">
+        <div class="container d-flex align-items-center justify-content-between gap-3 py-2">
+            <div class="site-brand d-flex align-items-center gap-2">
+                <span class="brand-logo" aria-hidden="true">🜚</span>
+                <span>XPectra</span>
+            </div>
+            <div class="header-actions d-flex align-items-center gap-2">
+                <button id="menuToggle" class="menu-toggle" aria-label="Abrir menú" aria-controls="primaryNav" aria-expanded="false" type="button">
+                    <i class="bi bi-list"></i>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#landingCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="filter:invert(1);"></span>
-                    <span class="visually-hidden">Siguiente</span>
+                <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema" type="button">
+                    <i class="bi bi-moon"></i>
                 </button>
             </div>
-            <div class="neo-title animate__animated animate__fadeInDown">
-                <span style="font-size:1.2em;letter-spacing:0.07em;">Clínica Radiografías</span>
-            </div>
-            <div class="neo-desc animate__animated animate__fadeInUp">
-                Gestión moderna y segura de tus citas, radiografías e informes médicos.<br>
-                <span class="neo-highlight">¡Minimalista e intuitivo!</span>
-            </div>
-            <div class="neo-btns">
-                <a href="/index.html" class="neo-btn animate__animated animate__bounceIn" aria-label="Iniciar sesión"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a>
-                <a href="/index.html#registerCard" class="neo-btn secondary animate__animated animate__bounceIn" aria-label="Registrarse"><i class="bi bi-person-plus"></i> Registrarse</a>
-                <a href="/index.html#gestion" id="gestionBtn" class="neo-btn animate__animated animate__bounceIn" style="display:none;" aria-label="Gestión de Citas"><i class="bi bi-calendar2-check"></i> Gestión de Citas</a>
-                <button id="landingLogoutBtn" class="neo-btn animate__animated animate__bounceIn" aria-label="Cerrar sesión"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
-            </div>
-        </section>
-
-        <hr class="neo-divider">
-
-        <section id="features" class="row justify-content-center mb-5">
-            <div class="col-md-4">
-                <div class="neo-card text-center animate__animated animate__fadeInUp shine-effect">
-                    <div class="neo-feature-icon"><i class="bi bi-calendar2-check"></i></div>
-                    <h5 class="mb-2 agenda-title">Agenda Inteligente</h5>
-                    <div>Reserva, consulta y gestiona tus citas médicas de forma sencilla y rápida, desde cualquier dispositivo.</div>
+            <nav id="primaryNav" class="site-nav" aria-label="Navegación principal">
+                <a href="#como-funciona">Cómo funciona</a>
+                <a href="#beneficios-title">Beneficios</a>
+                <a href="#faq-title">FAQ</a>
+                <a href="#contacto">Contacto</a>
+                <a href="#form-pregunta">Soporte</a>
+            </nav>
+        </div>
+    </header>
+    <div class="container-fluid px-0">
+        <div class="container">
+            <main>
+            <section class="neo-hero" aria-labelledby="hero-title">
+                <div class="hero-layout">
+                    <div class="hero-text-block">
+                        <h1 id="hero-title" class="neo-title">XPectra</h1>
+                        <p class="neo-desc">Radiografías digitales seguras y accesibles para pacientes y profesionales. <span style="color:var(--color-accent);font-weight:500;">Tu salud, nuestra imagen</span></p>
+                        <div class="neo-btns hero-ctas">
+                            <a href="/index.html" class="neo-btn" aria-label="Iniciar sesión"><i class="bi bi-box-arrow-in-right"></i> Iniciar sesión</a>
+                            <a href="/index.html#registerCard" class="neo-btn secondary" aria-label="Registrarse"><i class="bi bi-person-plus"></i> Registrarse</a>
+                            <a href="/index.html#gestion" id="gestionBtn" class="neo-btn" style="display:none;" aria-label="Gestión de Citas"><i class="bi bi-calendar2-check"></i> Gestión</a>
+                            <button id="landingLogoutBtn" class="neo-btn" aria-label="Cerrar sesión" style="display:none;"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+                        </div>
+                        <div class="hero-actions-line">
+                            <ul class="trust-points">
+                                <li><i class="bi bi-shield-check"></i> Privacidad</li>
+                                <li><i class="bi bi-cloud"></i> Acceso 24/7</li>
+                                <li><i class="bi bi-lock"></i> Cifrado</li>
+                            </ul>
+                        </div>
+                        <div class="hero-stats" aria-label="Indicadores" role="group">
+                            <div class="stat-item"><span class="stat-val">500+</span><span class="stat-label">Estudios</span></div>
+                            <div class="stat-item"><span class="stat-val">24/7</span><span class="stat-label">Disponibilidad</span></div>
+                            <div class="stat-item"><span class="stat-val">AES</span><span class="stat-label">Cifrado</span></div>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <img src="/img/p1.jpg" alt="Interfaz de XPectra mostrando radiografías" decoding="async" fetchpriority="high" width="520" height="360" class="hero-image" />
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="neo-card text-center animate__animated animate__fadeInUp shine-effect" style="animation-delay:0.2s;">
-                    <div class="neo-feature-icon"><i class="bi bi-image"></i></div>
-                    <h5 class="mb-2 digitales-title">Radiografías Digitales</h5>
-                    <div>Accede a tus radiografías y resultados en línea, con visualización optimizada y galería animada.</div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="neo-card text-center animate__animated animate__fadeInUp shine-effect" style="animation-delay:0.4s;">
-                    <div class="neo-feature-icon"><i class="bi bi-shield-lock"></i></div>
-                    <h5 class="mb-2 privacidad-title">Privacidad y Seguridad</h5>
-                    <div>Tus datos están protegidos con cifrado y acceso seguro. Solo tú y tu médico pueden ver tu información.</div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <hr class="neo-divider">
+            <hr class="neo-divider">
 
-        <section id="contacto" class="mb-5">
-            <div class="neo-section-title animate__animated animate__fadeInDown"><i class="bi bi-envelope-paper"></i> Contacto</div>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="neo-card animate__animated animate__fadeInUp">
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-geo-alt neo-feature-icon"></i>
-                            <span>Calle Barcelona, San Salvador</span>
+            <section id="como-funciona" class="mb-5 how-steps" aria-labelledby="como-funciona-title">
+                <div class="neo-section-title" id="como-funciona-title"><i class="bi bi-lightning-charge"></i> Cómo funciona</div>
+                <div class="row justify-content-center mt-4 steps-grid">
+                    <div class="col-md-4 mb-3">
+                        <div class="neo-card step-card text-center">
+                           <div class="step-icon"><i class="bi bi-person"></i></div>
+                            <h5>1. Regístrate</h5>
+                            <p>Crea tu cuenta y valida tu acceso de forma segura.</p>
                         </div>
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-telephone neo-feature-icon"></i>
-                            <span>+503 7657 7892</span>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="neo-card step-card text-center">
+                           <div class="step-icon"><i class="bi bi-calendar-check"></i></div>
+                            <h5>2. Agenda / Consulta</h5>
+                            <p>Programa tu cita o revisa el estado de tus estudios.</p>
                         </div>
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-envelope neo-feature-icon"></i>
-                            <span>contacto@clinicaradiografias.com</span>
-                        </div>
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-clock neo-feature-icon"></i>
-                            <span>Lunes a Viernes: 8:00 - 18:00</span>
-                        </div>
-                        <div class="mb-3 d-flex align-items-center">
-                            <i class="bi bi-instagram neo-feature-icon"></i>
-                            <a href="https://instagram.com/clinicaradiografias" target="_blank" class="neo-btn secondary instagram-btn">Instagram</a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="neo-card step-card text-center">
+                           <div class="step-icon"><i class="bi bi-cloud-download"></i></div>
+                            <h5>3. Accede y comparte</h5>
+                            <p>Visualiza tus radiografías y compártelas con tu médico.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <hr class="neo-divider">
+            <section id="features" class="row justify-content-center mb-5" aria-labelledby="beneficios-title">
+                <h2 id="beneficios-title" class="visually-hidden">Beneficios</h2>
+                <div class="col-md-4">
+                    <article class="neo-card text-center" aria-label="Agenda Inteligente">
+                        <div class="neo-feature-icon"><i class="bi bi-calendar2-check"></i></div>
+                        <h5 class="mb-2">Agenda Inteligente</h5>
+                        <div>Reserva, consulta y gestiona tus citas médicas de forma sencilla y rápida, desde cualquier dispositivo.</div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="neo-card text-center" aria-label="Radiografías Digitales">
+                        <div class="neo-feature-icon"><i class="bi bi-image"></i></div>
+                        <h5 class="mb-2">Radiografías Digitales</h5>
+                        <div>Accede a tus radiografías y resultados en línea, con visualización optimizada y galería simple.</div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="neo-card text-center" aria-label="Privacidad y Seguridad">
+                        <div class="neo-feature-icon"><i class="bi bi-shield-lock"></i></div>
+                        <h5 class="mb-2">Privacidad y Seguridad</h5>
+                        <div>Tus datos están protegidos con cifrado y acceso seguro. Solo tú y tu médico pueden ver tu información.</div>
+                    </article>
+                </div>
+            </section>
 
-        <section id="faq" class="mb-5">
-            <div class="neo-section-title animate__animated animate__fadeInDown"><i class="bi bi-question-circle"></i> Preguntas Frecuentes</div>
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="neo-card mb-3">
-                        <div class="neo-faq-q"><i class="bi bi-chevron-right"></i> ¿Cómo agendo una cita?</div>
-                        <div class="neo-faq-a">Haz clic en "Iniciar sesión" o "Registrarse", accede a tu cuenta y utiliza el formulario para agendar una nueva cita.</div>
-                    </div>
-                    <div class="neo-card mb-3">
-                        <div class="neo-faq-q"><i class="bi bi-chevron-right"></i> ¿Mis datos están seguros?</div>
-                        <div class="neo-faq-a">Tus datos están protegidos y solo tú y tu médico pueden acceder a ellos.</div>
-                    </div>
-                    <div class="neo-card mb-3">
-                        <div class="neo-faq-q"><i class="bi bi-chevron-right"></i> ¿Cómo puedo contactar soporte?</div>
-                        <div class="neo-faq-a">Puedes usar el formulario de contacto o escribirnos a contacto@clinicaradiografias.com.</div>
+            <hr class="neo-divider">
+
+            <section id="contacto" class="mb-5">
+                <div class="neo-section-title"><i class="bi bi-envelope-paper"></i> Contacto</div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="neo-card contact-grid">
+                            <div class="contact-item">
+                                <i class="bi bi-geo-alt"></i>
+                                <span>Calle Barcelona, San Salvador</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-telephone"></i>
+                                <span>+503 7657 7892</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-envelope"></i>
+                                <span>contacto@XPectra.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-clock"></i>
+                                <span>Lunes a Viernes: 8:00 - 17:00</span>
+                            </div>
+                            <div class="contact-social">
+                                <a href="https://instagram.com/XPectra" target="_blank" class="neo-btn secondary instagram-btn" aria-label="Instagram"><i class="bi bi-instagram"></i> Instagram</a>
+                                <a href="https://facebook.com/XPectra" target="_blank" class="neo-btn secondary facebook-btn" aria-label="Facebook"><i class="bi bi-facebook"></i> Facebook</a>
+                                <a href="https://twitter.com/XPectra" target="_blank" class="neo-btn secondary twitter-btn" aria-label="Twitter"><i class="bi bi-twitter"></i> Twitter</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <hr class="neo-divider">
+            <hr class="neo-divider">
 
-        <section id="form-pregunta" class="mb-5">
-            <div class="neo-section-title animate__animated animate__fadeInDown"><i class="bi bi-chat-dots"></i> ¿Tienes una pregunta?</div>
-            <div class="row justify-content-center">
-                <div class="col-md-7">
-                    <form id="preguntaForm" class="neo-form neo-card animate__animated animate__fadeInUp">
-                        <div class="mb-3">
-                            <label for="nombrePregunta">Nombre</label>
-                            <input type="text" class="form-control" id="nombrePregunta" required maxlength="100" autocomplete="name">
+            <section id="faq" class="mb-5" aria-labelledby="faq-title">
+                <div class="neo-section-title" id="faq-title"><i class="bi bi-question-circle"></i> Preguntas Frecuentes</div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="faq-set" role="list">
+                            <div class="neo-card faq-item" role="listitem">
+                                            <button class="faq-question" aria-expanded="false" aria-controls="faq1" id="faqBtn1">
+                                                <span class="q-text">¿Cómo agendo una cita?</span>
+                                                <i class="bi bi-chevron-down toggle-icon" aria-hidden="true"></i>
+                                            </button>
+                                <div id="faq1" class="faq-answer" role="region" aria-labelledby="faqBtn1" hidden>
+                                    Haz clic en "Iniciar sesión" o "Registrarse", accede a tu cuenta y utiliza el formulario para agendar una nueva cita.
+                                </div>
+                            </div>
+                            <div class="neo-card faq-item" role="listitem">
+                                    <button class="faq-question" aria-expanded="false" aria-controls="faq2" id="faqBtn2">
+                                        <span class="q-text">¿Mis datos están seguros?</span>
+                                        <i class="bi bi-chevron-down toggle-icon" aria-hidden="true"></i>
+                                    </button>
+                                <div id="faq2" class="faq-answer" role="region" aria-labelledby="faqBtn2" hidden>
+                                    Tus datos están protegidos y solo tú y tu médico pueden acceder a ellos.
+                                </div>
+                            </div>
+                            <div class="neo-card faq-item" role="listitem">
+                                    <button class="faq-question" aria-expanded="false" aria-controls="faq3" id="faqBtn3">
+                                        <span class="q-text">¿Cómo puedo contactar soporte?</span>
+                                        <i class="bi bi-chevron-down toggle-icon" aria-hidden="true"></i>
+                                    </button>
+                                <div id="faq3" class="faq-answer" role="region" aria-labelledby="faqBtn3" hidden>
+                                    Puedes usar el formulario de contacto o escribirnos a contacto@clinicaradiografias.com.
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="correoPregunta">Correo electrónico</label>
-                            <input type="email" class="form-control" id="correoPregunta" required maxlength="100" autocomplete="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="mensajePregunta">Pregunta o mensaje</label>
-                            <textarea class="form-control" id="mensajePregunta" rows="4" required maxlength="500"></textarea>
-                        </div>
-                        <button type="submit" class="neo-btn shine-effect" style="width:100%;">Enviar pregunta</button>
-                        <div id="preguntaMsg" class="mt-3"></div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <div class="neo-footer">
-            <span>© 2025 Clínica Radiografías. <i class="bi bi-heart-fill animate__animated animate__pulse animate__infinite" style="color:#e74870"></i></span>
+            <hr class="neo-divider">
+
+            <section id="form-pregunta" class="mb-5">
+                <div class="neo-section-title"><i class="bi bi-chat-dots"></i> ¿Tienes una pregunta?</div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <form id="preguntaForm" class="neo-form neo-card modal-responsive">
+                            <div class="form-grid-2">
+                                <div class="mb-3">
+                                    <label for="nombrePregunta">Nombre</label>
+                                    <input type="text" class="form-control" id="nombrePregunta" required maxlength="100" autocomplete="name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="apellidoPregunta">Apellido</label>
+                                    <input type="text" class="form-control" id="apellidoPregunta" maxlength="100" autocomplete="family-name">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="correoPregunta">Correo electrónico</label>
+                                <input type="email" class="form-control" id="correoPregunta" required maxlength="100" autocomplete="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="mensajePregunta">Pregunta o mensaje</label>
+                                <textarea class="form-control" id="mensajePregunta" rows="5" required maxlength="500"></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="neo-btn submit-btn">Enviar pregunta</button>
+                            </div>
+                            <div id="preguntaMsg" class="mt-3"></div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="site-footer" role="contentinfo">
+                <div class="footer-grid container" style="max-width: 1100px; margin: 0 auto;">
+                    <div class="footer-col">
+                        <h6 class="footer-title">XPectra</h6>
+                        <p class="footer-text">Radiografías digitales seguras, accesibles y centradas en el paciente.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h6 class="footer-title">Plataforma</h6>
+                        <ul class="footer-list" aria-label="Enlaces plataforma">
+                            <li><a href="#como-funciona">Cómo funciona</a></li>
+                            <li><a href="#beneficios-title">Beneficios</a></li>
+                            <li><a href="#faq-title">FAQ</a></li>
+                            <li><a href="#form-pregunta">Soporte</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h6 class="footer-title">Contacto</h6>
+                        <ul class="footer-list" aria-label="Datos de contacto">
+                            <li>Calle Barcelona, San Salvador</li>
+                            <li>+503 7657 7892</li>
+                            <li><a href="mailto:contacto@XPectra.com">contacto@XPectra.com</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h6 class="footer-title">Redes</h6>
+                        <div class="footer-social">
+                            <a href="https://instagram.com/XPectra" aria-label="Instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                            <a href="https://facebook.com/XPectra" aria-label="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                            <a href="https://twitter.com/XPectra" aria-label="Twitter" target="_blank"><i class="bi bi-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">© 2025 XPectra. Todos los derechos reservados.</div>
+            </footer>
+            </main>
         </div>
     </div>
-</body>
+    <div id="themeLive" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+    </body>
 </html>
+
