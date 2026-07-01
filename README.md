@@ -86,8 +86,8 @@ open http://localhost:3000
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/xpectra-clinic.git
-cd xpectra-clinic
+git clone https://github.com/tu-usuario/Xpectra_CR.git
+cd xXpectra_CR
 ```
 
 ### 2. Crear la base de datos
@@ -300,16 +300,6 @@ docker compose down -v
 | Desarrollo | `npm run dev` | Servidor con recarga automática (nodemon) |
 | Producción | `npm start` | Servidor con Node.js |
 | Tests | `npm test` | Ejecutar suite de tests |
-
----
-
-## 🤝 Contribución
-
-1. Fork el repositorio
-2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'feat: agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
 
 ---
 
