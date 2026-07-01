@@ -13,7 +13,11 @@ const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const SECRET = process.env.JWT_SECRET || 'supersecreto';
+const SECRET = process.env.JWT_SECRET;
+if (!SECRET) {
+    console.error('ERROR: JWT_SECRET no está definido en .env');
+    process.exit(1);
+}
 // Zona horaria por defecto: El Salvador (UTC-06, sin DST)
 const TIMEZONE_OFFSET_MINUTES = parseInt(process.env.TZ_OFFSET_MINUTES || '-360', 10); // -6h
 // Políticas (horas mínimas)
@@ -74,8 +78,8 @@ app.use(express.static(path.join(__dirname, '../client')));
 // Configuración MySQL
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'p1',
-    password: process.env.DB_PASSWORD || '123',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME || 'clinicaradiografias',
     waitForConnections: true,
     connectionLimit: 10,
@@ -241,7 +245,7 @@ app.post('/api/login', loginLimiter,
         }
         
         const { Correo, Contrasena } = req.body;
-        console.log('Intento de login para:', Correo); // Log para depuración
+
         
         if (!Correo || !Contrasena) {
             return res.status(400).json({ error: 'Correo y contraseña requeridos' });
@@ -254,13 +258,12 @@ app.post('/api/login', loginLimiter,
             );
             
             if (users.length === 0) {
-                console.log('Usuario no encontrado:', Correo);
                 return res.status(401).json({ error: 'Usuario no encontrado' });
             }
             
             const user = users[0];
             const hash = user.Contrasena_Hash;
-            console.log('Usuario encontrado:', user.Correo, 'Hash:', hash ? 'Presente' : 'Ausente');
+
 
             // Verificación de bloqueo progresivo por intentos fallidos
             async function getAttempts(uId){
@@ -322,7 +325,7 @@ app.post('/api/login', loginLimiter,
             
             // Comparar contraseña
             const valid = await bcrypt.compare(Contrasena, hash);
-            console.log('Validación de contraseña:', valid);
+
             
             if (!valid) {
                 // Incrementar contador y bloquear si corresponde (cada 3 fallos)
@@ -349,7 +352,7 @@ app.post('/api/login', loginLimiter,
                 Correo: user.Correo
             }, SECRET, { expiresIn: '8h' });
             
-            console.log('Login exitoso para:', user.Correo);
+
             // Resetear intentos en éxito
             try { await resetAttempts(user.ID_Usuario); } catch(_e) {}
             
@@ -542,11 +545,7 @@ app.post('/api/citas', authMiddleware, [
         ID_Categoria
     } = req.body;
 
-    // Log para depuración de campos recibidos
-    console.log('POST /api/citas', {
-        Nombre, Apellido, Fecha_Nacimiento, Sexo, Direccion, Telefono, Correo_Electronico,
-        Fecha_Cita, Hora_Cita, Motivo, Metodo_Pago, Fecha_Pago, ID_Categoria
-    });
+
 
     if (
         !Nombre || !Apellido || !Fecha_Nacimiento || !Sexo ||
@@ -733,7 +732,7 @@ app.put('/api/citas/:id', authMiddleware, async (req, res) => {
     const idCita = req.params.id;
     const { Fecha_Cita, Hora_Cita, Motivo } = req.body;
     // Log de entrada para depuración
-    console.log('PUT /api/citas/:id', { idCita, Fecha_Cita, Hora_Cita, Motivo, user: req.user });
+
 
     if (!Fecha_Cita || !Hora_Cita) {
         return res.status(400).json({ error: 'Fecha y hora obligatorias.' });
@@ -1180,7 +1179,7 @@ app.get('/api/citas-sin-informe', authMiddleware, async (req, res) => {
               )
             ORDER BY c.Fecha_Cita DESC
         `);
-        console.log('CITAS SIN INFORME:', rows.length, rows);
+
         res.json(rows);
     } catch (error) {
         res.status(500).json({ error: error.message });
