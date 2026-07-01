@@ -62,8 +62,8 @@ La forma más rápida de levantar el proyecto:
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/xpectra-clinic.git
-cd xpectra-clinic
+git clone https://github.com/CR1309/Xpectra_CR.git
+cd Xpectra_CR.git
 
 # 2. Levantar MySQL + App con un solo comando
 docker compose up -d
@@ -86,8 +86,8 @@ open http://localhost:3000
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/Xpectra_CR.git
-cd xXpectra_CR
+git clone https://github.com/CR1309/Xpectra_CR.git
+cd Xpectra_CR
 ```
 
 ### 2. Crear la base de datos
